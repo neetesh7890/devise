@@ -19,10 +19,7 @@
 
         <% else %>
           <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
-          <%= link_to "Login", new_user_session_path, :class => 'navbar-link', "data-toggle" => "modal", "data-target" => ""  %>
-
-          <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#login">Open Modal</button>
-
+          <%= link_to "Login", "javascript:void(0);", :class => '', data: { toggle: "modal", target: '#mylogin'} %>
         <% end %>
       </p>
 
