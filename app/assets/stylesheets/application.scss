@@ -15,3 +15,104 @@
  */
  @import "bootstrap-sprockets";
  @import "bootstrap";
+
+ .min-height {
+   min-height: 500px;
+}
+.row h2{
+  text-align: center;
+}
+.col-md-12 img {
+  height:180px; 
+  width: 150px;
+
+}
+.col-md-4 p{
+  text-align: center;
+  color: green;
+  font-size: 200%;
+}
+.row h2{
+  margin-bottom: 25px;
+}
+.image{
+
+  } 
+.image img {
+  height: 150px;
+  width:150px;
+  margin-right: 10px;
+}
+.image p {
+  color: green;
+  margin-left: 0px;
+  margin-top: 50px;
+  font-size: 200%;
+  
+}
+.navbar-default{
+    background-color: #0088dd; 
+}
+.navbar-default .navbar-nav > li > a{
+  color: white;
+}
+.navbar-default .navbar-brand{
+  color:white;
+}
+.popup-container {
+    margin-top:10px;
+    height: auto;
+    width: 100%;
+    font-size: 120%;
+    margin-left:0px;
+}
+.popup-container table{
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-right: 20px;
+    height: auto;
+}
+.popup-container table td{
+  margin-left: 10px;
+}
+.hide-class{
+    display:none;
+}
+
+.color-c2d6d6{
+  background-color: #c2d6d6;
+  margin-bottom: 100px;
+  min-height: 550px;
+}
+.color-ffeecc{
+  
+  margin-bottom: 10px;
+  min-height: 550px;
+}
+.color-e9e2e2{
+  background-color: #e9e2e2;
+}
+.center{
+  text-align: center;
+}
+.border-1px{
+  border: 1px solid #e9ebee;
+  margin-left: 10px;
+}
+.glyphicon-remove{
+  color: #ff4d4d;
+}
+.remove-friend{
+  margin-top: 110px;
+  color: white;
+  margin-left: 36px;
+}
+.index-margin-bottom{
+  margin-bottom: 45px;
+}
+.main-center {
+  margin: 0 auto;
+  max-width: 400px;
+  padding: 40px 40px;
+}
+

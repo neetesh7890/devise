@@ -10,9 +10,21 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
 //= require rails-ujs
 //= require turbolinks
+//= require jquery
+// @import "font-awesome-sprockets";
+// @import "font-awesome";
 //= require bootstrap-sprockets
-
 //= require_tree .
+
+function submit_btn() {
+  user = $("#user_id").val()
+  album = $("#album_id").val()
+  $.ajax({
+    url: "/users/" + user+ "/albums/" + album + "/comments/remark",
+    type: 'POST',
+    dataType: 'script',
+    data: { new_comment: $("#comment_comment_name").val() }
+  });
+}

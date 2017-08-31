@@ -1,0 +1,87 @@
+<center><h2>Sign up</h2></center>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+  
+  <!-- added by NG -->
+    <div class="form-group">
+      <%= f.label :firstname, id: "", class: "cols-sm-2 control-label" %>
+      <div class="cols-sm-10">
+        <div class="input-group">
+          <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+          <%= f.text_field :firstname,class:"form-control", :required => true, placeholder: "Enter your name" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :lastname, class: "cols-sm-2 control-label" %>
+      <div class="cols-sm-10">
+        <div class="input-group">
+          <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+          <%= f.text_field :lastname,class:"form-control", :required => true, placeholder: "Enter your last name" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :email ,class:"cols-sm-2 control-label" %>
+      <div class="cols-sm-10">
+        <div class="input-group">
+          <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+          <%= f.email_field :email, autofocus: true, :required => true,placeholder:"Enter your Email", class:"form-control" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :gender, class:"cols-sm-2 control-label" %>
+      <div class="cols-sm-10">
+        <div class="input-group">
+          <span class="input-group-addon"><i class="fa fa-users" aria-hidden="true"></i></span>
+          <%= f.radio_button :gender, false %>Male
+          <%= f.radio_button :gender, true %>Female 
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :dob %>
+      <div class="cols-sm-10">
+        <div class="input-group">
+          <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+          <%= f.date_select("dob", {start_year: 1992, end_year: Date.current.year}) %>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :password, class:"cols-sm-2 control-label" %>
+      <div class="cols-sm-10">
+        <div class="input-group">
+          <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+          <% if @minimum_password_length %>
+          <em>(<%= @minimum_password_length %> characters minimum)</em>
+          <% end %><br />
+          <%= f.password_field :password, autocomplete: "off",class:"form-control",placeholder:"Enter your Password", :required => true %>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :password_confirmation, class:"cols-sm-2 control-label" %><br />
+      <div class="cols-sm-10">
+        <div class="input-group">
+          <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+          <%= f.password_field :password_confirmation, autocomplete: "off",class:"form-control",placeholder:"Enter your Password", :required => true %>
+        </div>
+      </div>
+    </div>  
+
+    <div class="form-group ">
+      <%= f.submit "Create Account", class:"btn btn-primary btn-lg btn-block login-button" %>
+    </div>
+  <!-- End -->
+<% end %>
+
+<%= render "devise/shared/links" %>
