@@ -43,8 +43,8 @@
             </div>
 
             <div class="col-md-2">
-              <% if comment.user_id==@user.id %>
-                <%= link_to user_album_comment_path(@user.id,@album.id,comment.id) , method: :delete, remote: true ,  data: { confirm: 'Sure to delete comment ?'} do %>
+              <% if comment.user_id==current_user.id %>
+                <%= link_to album_comment_path(@album.id,comment.id) , method: :delete, remote: true ,  data: { confirm: 'Sure to delete comment ?'} do %>
                   <i class="fa fa-times fa-2x" aria-hidden="true" ></i>
                 <% end %> 
               <% end %>
@@ -53,7 +53,7 @@
       <% end %>
     </div>
 
-    <%= form_for @comment ,url: remark_user_album_comments_path(@user.id,@album.id), method: :post, :html => { :onsubmit => "return false" } do |f| %>  
+    <%= form_for @comment ,url: remark_album_comments_path(@album.id), method: :post, :html => { :onsubmit => "return false" } do |f| %>  
       <div class="col-md-12">
       <hr><hr>
       </div>
@@ -61,7 +61,7 @@
         <%= f.label :comments %>
       </div>
 
-      <%= hidden_field_tag(:user_id, @user.id) %>
+      <%= hidden_field_tag(:user_id, current_user.id) %>
       <%= hidden_field_tag(:album_id, @album.id) %>
 
       <div class="col-md-12 comment">

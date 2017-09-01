@@ -19,10 +19,10 @@
 //= require_tree .
 
 function submit_btn() {
-  user = $("#user_id").val()
   album = $("#album_id").val()
+  debugger
   $.ajax({
-    url: "/users/" + user+ "/albums/" + album + "/comments/remark",
+    url: "/users" + "/albums/" + album + "/comments/remark",
     type: 'POST',
     dataType: 'script',
     data: { new_comment: $("#comment_comment_name").val() }

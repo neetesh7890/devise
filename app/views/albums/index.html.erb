@@ -1,7 +1,7 @@
-<%= form_for @user , url: {action: "create"}, method: "post"  do |f| %>
+<%= form_for current_user , url: {action: "create"}, method: "post"  do |f| %>
 	<div class='row'>
 		<div class='col-md-4'>
-			<%= link_to new_user_album_path(@user.id), title:"Create new album" do%>
+			<%= link_to new_album_path, title:"Create new album" do%>
 		  	<i class="fa fa-plus fa-3x" aria-hidden="true"></i>
 		  <% end %>	
 		</div>
@@ -21,20 +21,20 @@
 			<div class='col-md-2'>
 					
 				<div class='col-md-1 col-sm-offset-7'>
-					<%= link_to  album_all_user_album_path(@user.id,item.id),title:"Add More pic" do%>
+					<%= link_to album_all_album_path(item.id),title:"Add More pic" do%>
 		        <span class="glyphicon glyphicon-plus"></span>
 		      <% end %>
 				</div>
 
 				<div class='col-md-2'>
-					<%= link_to user_album_path(@user.id,item.id), method: :delete ,title: "Remove Album", data: { confirm: 'Are you sure?' }  do %> 
+					<%= link_to album_path(item.id), method: :delete ,title: "Remove Album", data: { confirm: 'Are you sure?' }  do %> 
 						<title>Remove</title>
 		        <span class="glyphicon glyphicon-remove"></span>
 		      <% end %> 	
 				</div>
 
 				<div class='col-md-12'>
-					<%= link_to user_album_comments_path(@user.id,item.id) do %>
+					<%= link_to album_comments_path(item.id) do %>
 						<% if item.album_images.first.image_name.present? %>
 							<%= image_tag item.album_images.first.image_name_url(:size_135_180) , class: 'img-thumbnail' %>
 						<% else %>
@@ -49,7 +49,7 @@
 			</div>
 		<% end %>
 		<div class="col-md-2", style="margin-top: 70px; color: green;">
-			<h3><%= link_to "View All", my_album_user_albums_path(@user.id) %></h3>
+			<h3><%= link_to "View All", my_album_albums_path %></h3>
 		</div>
 		<div class="col-md-12">
 			<%= will_paginate @albums %>
@@ -76,7 +76,7 @@
 			</div>
 			
 			<div class='col-md-12'> 
-				<%= link_to user_album_comments_path(@user.id,album.id) do %>
+				<%= link_to 'user_album_comments_path(current_user.id,album.id)' do %>
 					<% if album.album_images.first.image_name.present? %>
 						<%= image_tag album.album_images.first.image_name_url(:size_135_180) , class: 'img-thumbnail'	%>
 					<% else %>
@@ -90,7 +90,7 @@
 		</div>
 	<% end %>	
 	<div class="col-md-2", style="margin-top: 90px; color: green;">
-		<h3><%= link_to "View All", friend_album_user_albums_path(@user.id) %></h3>
+		<h3><%= link_to "View All", 'friend_album_user_albums_path(current_user.id)' %></h3>
 	</div>
 	<div class="col-md-12">
 		<%= will_paginate @albums %>

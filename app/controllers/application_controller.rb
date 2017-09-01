@@ -12,11 +12,13 @@ class ApplicationController < ActionController::Base
 
     def configure_permitted_parameters
       
-      if params[:action] == 'update'
-        # devise_parameter_sanitizer.permit(:sign_up) do |user_params|
-        #   user_params.permit(:avatar)
-        # end
-      end
+      # if params[:action] == 'create'
+      #   devise_parameter_sanitizer.permit(:sign_up) do |user_params|
+      #     user_params.permit(:firstname,:lastname)
+      #   end
+      # end
+
+      
     end
 
     # def configure_permitted_parameters

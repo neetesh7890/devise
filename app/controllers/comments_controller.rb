@@ -15,7 +15,7 @@ class CommentsController < ApplicationController
 
 	def remark
 		# @album = Album.find_by(id: params[:album_id])
-		@comment = @album.comments.build(comment_name: params[:new_comment], user_id: @user.id)
+		@comment = @album.comments.build(comment_name: params[:new_comment], user_id: current_user.id)
 		@album.increment!(:comment_count) #Auto increment comment_count in albums
 		# if @comment.save
 		# 	redirect_to user_album_comments_path(@user.id,params[:album_id])

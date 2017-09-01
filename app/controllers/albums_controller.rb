@@ -2,8 +2,9 @@ class AlbumsController < ApplicationController
 	
 	#Actions
 	def index
-		@albums = @user.albums.order('comment_count DESC').paginate(:page => params[:page], :per_page => 5)
-		user_ids = @user.friends.confirm_friend.ids
+		
+		@albums = current_user.albums.order('comment_count DESC').paginate(:page => params[:page], :per_page => 5)
+		user_ids = current_user.friends.confirm_friend.ids
 		@friends_albums = Album.where(user_id: user_ids).albums_order_by_comments.paginate(:page => params[:page], :per_page => 5)
 	end
 
@@ -11,21 +12,21 @@ class AlbumsController < ApplicationController
 	end
 
 	def friend_album
-		user_ids = @user.friends.confirm_friend.pluck(:id)
+		user_ids = current_user.friends.confirm_friend.pluck(:id)
 		@friend_albums = Album.where(user_id: user_ids).albums_order_by_comments
 	end
 	
 	def my_album_all
-		@album = @user.albums.find(params[:id])
+		@album = current_user.albums.find(params[:id])
 		@albumimage = AlbumImage.new
 	end
 
 	def destroy_pic
-		@image = @user.albums.find_by(id: params[:id]).album_images.find_by(id: params[:pic_id])	
+		@image = current_user.albums.find_by(id: params[:id]).album_images.find_by(id: params[:pic_id])	
 		if @image.destroy
-			redirect_to album_all_user_album_path(@user.id,params[:id])
+			redirect_to album_all_album_path(params[:id])
 		else
-			redirect_to album_all_user_album_path(@user.id,params[:id])
+			redirect_to album_all_album_path(params[:id])
 		end
 	end
 
@@ -38,7 +39,7 @@ class AlbumsController < ApplicationController
 	end
 
 	def create
-		@album = @user.albums.new(params.require(:album).permit(:album_name))
+		@album = current_user.albums.new(params.require(:album).permit(:album_name))
 		images = params["album"]["image_name"]
 		if images.present?
 			images.each do |image|
@@ -47,13 +48,13 @@ class AlbumsController < ApplicationController
 			end			
 			if @album.save
 				flash[:notice] = "Album Created"
-				redirect_to user_albums_path(@user.id)	
+				redirect_to albums_path	
 			else
-				redirect_to user_albums_path(@user.id)		
+				redirect_to albums_path	
 			end
 		else
 			flash[:notice] = "Album could not uploaded please select atleat one image"
-			redirect_to user_albums_path(@user.id)	
+			redirect_to new_album_path	
 		end
 
 		# img_names = params["album"]["image_name"]
@@ -69,13 +70,13 @@ class AlbumsController < ApplicationController
 
 			# if @album.save
 		# 		flash[:notice] = "Album Created"
-		# 		redirect_to user_albums_path(@user.id)	
+		# 		redirect_to user_albums_path(current_user.id)	
 		# 	else
-		# 		redirect_to user_albums_path(@user.id)		
+		# 		redirect_to user_albums_path(current_user.id)		
 		# 	end
 		# else
 		# 	flash[:notice] = "Album could not be created please select atleast one image"
-		# 	redirect_to user_albums_path(@user.id)		
+		# 	redirect_to user_albums_path(current_user.id)		
 		# end
 	end
 
@@ -83,7 +84,7 @@ class AlbumsController < ApplicationController
 	end
 	
 	def update
-		@album = @user.albums.find_by(id: params[:id])
+		@album = current_user.albums.find_by(id: params[:id])
 		img_names = params["album"]["image_name"] if @album.present?
 		if img_names.present?
 			img_names.each do |image|
@@ -91,11 +92,11 @@ class AlbumsController < ApplicationController
 				album_image.image_name = image		
 			end
 			if @album.save
-				redirect_to album_all_user_album_path(@user.id,params[:id])
+				redirect_to album_all_album_path(params[:id])
 			end
 		else
 			flash[:notice] = "Album could not update"
-			redirect_to album_all_user_album_path(@user.id,params[:id])	
+			redirect_to album_all_album_path(params[:id])
 		end
 		# unless img_names.nil?
 		# 	img_names.each do |img_name|
@@ -106,20 +107,20 @@ class AlbumsController < ApplicationController
 		#       file.write(img_name.read)
 		# 		@albumimage.image_name = pic_name
 		#     end
-		# 		redirect_to album_all_user_album_path(@user.id,params[:id]) and return unless @albumimage.save	 #true par nahi chalega false par redirect to		        
+		# 		redirect_to album_all_user_album_path(current_user.id,params[:id]) and return unless @albumimage.save	 #true par nahi chalega false par redirect to		        
 		# 		flash[:notice] = "Album Updated"
 		# 	end
 		# end
 	end
 
-	def destroy	
-		@album = @user.albums.find_by(id: params[:id])
+	def destroy
+		@album = current_user.albums.find_by(id: params[:id])
 		if @album.destroy
 			flash[:notice] = "Album deleted"
-			redirect_to user_albums_path(@user.id)
+			redirect_to albums_path(current_user.id)
 		else
 			flash[:notice] = "Album could not deleted"
-			redirect_to user_albums_path(@user.id)
+			redirect_to albums_path(current_user.id)
 		end
 	end
 

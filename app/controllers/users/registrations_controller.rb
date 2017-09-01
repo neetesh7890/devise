@@ -45,10 +45,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   protected
 
   # def after_update_path_for(resource)
-  #   debugger
   #   case resource
   #   when :user, User
-  #     debugger
   #     resource.avatar? ? redirect_to dashboards_path : redirect_to root_path
   #   else
   #     super
@@ -67,7 +65,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # The path used after sign up.
   def after_sign_up_path_for(resource)
-    debugger
     super(resource)
   end
 

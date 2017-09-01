@@ -1,7 +1,7 @@
-<%= form_for @user , url: {action: "create"}, method: "post"  do |f| %>
+<%= form_for current_user , url: {action: "create"}, method: "post"  do |f| %>
 	<div class='row'>
 		<div class='col-md-4'>
-			<%= link_to new_user_album_path(@user.id), title:"Create new album" do%>
+			<%= link_to new_album_path, title:"Create new album" do%>
 		  	<i class="fa fa-plus fa-3x" aria-hidden="true"></i>
 		  <% end %>	
 		</div>
@@ -12,29 +12,25 @@
 	</div>	
 
 	<div class='row'>
-		<% @user.albums.each do |item|%>
+		<% current_user.albums.each do |item|%>
 			<% image = item.album_images.first %>
 			<div class='col-md-2'>
-			<%debugger%>
-				<%= link_to 'Edit Ad', [:edit, @user, item] %>
-				
-				
-			<%debugger%>
+			
 				<% image = item.album_images.first %>	
 					<div class='col-md-1 col-sm-offset-7'>
-						<%= link_to  album_all_user_album_path(@user.id,item.id),title:"Add More pic" do%>
+						<%= link_to  album_all_album_path(item.id),title:"Add More pic" do%>
 			        <span class="glyphicon glyphicon-plus"></span>
 			      <% end %>
 					</div>
 					<div class='col-md-1'>
-						<%= link_to user_album_path(@user.id,item.id), method: :delete ,title:"Remove Album", data: { confirm: 'Are you sure?' }  do%> 
+						<%= link_to 'user_album_path(current_user.id,item.id)', method: :delete ,title:"Remove Album", data: { confirm: 'Are you sure?' }  do%> 
 							<span class="glyphicon glyphicon-remove"></span>
 			        
 			      <% end %> 	
 					</div>
 					
 					<div class='col-md-12'>
-						<%= link_to user_album_comments_path(@user.id,item.id) do %>
+						<%= link_to album_comments_path(item.id) do %>
 							<% if item.album_images.first.image_name.present? %>
 								<%= image_tag item.album_images.first.image_name_url(:size_135_180) , class: 'img-thumbnail' %>
 							<% else %>

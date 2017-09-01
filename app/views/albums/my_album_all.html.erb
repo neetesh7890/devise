@@ -1,4 +1,4 @@
-<%= form_for @album , url: user_album_path(@user.id,@album.id), method: "put"  do |f| %>
+<%= form_for @album , url: album_path(@album.id), method: "put"  do |f| %>
   <div class='row'>
     <div class='col-md-12'>
       <h2><%= @album.album_name %></h2>
@@ -24,7 +24,7 @@
     <% @album.album_images.each do |item|%>
       <div class='col-md-2'>    
         <div class='col-md-1 col-sm-offset-9'>
-          <%= link_to destroy_pic_user_album_path(@user.id,@album.id,pic_id: item.id),method: :delete, title: "Delete pic",data: { confirm: 'Are you sure?' }  do %>
+          <%= link_to destroy_pic_album_path(@album.id,pic_id: item.id),method: :delete, title: "Delete pic",data: { confirm: 'Are you sure?' }  do %>
             <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
           <% end %>
         </div>

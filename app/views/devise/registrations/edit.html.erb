@@ -7,7 +7,9 @@
 
 
   <!-- Added by NG -->
+   <%debugger%>
     <%= f.fields_for :user_detail do |ud| %>
+      <%debugger%>
       <div class="col-md-1 col-md-offset-4 center">
         <%= ud.label :address %>
       </div>
@@ -53,10 +55,7 @@
       <div class="field">
         <%= ud.label :address %>   
       </div>
-      
     <% end %>
-
-    
   <!-- end -->
 
   <div class="field">

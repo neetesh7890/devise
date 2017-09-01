@@ -7,28 +7,30 @@ class FriendsController < ApplicationController
 
 	#Actions
 	def index
-		# @friends = @user.friends.confirm_friend
+		# @friends = current_user.friends.confirm_friend
 	end
 
 	def show
-		# @friends = @user.friends.confirm_friend
+		# @friends = current_user.friends.confirm_friend
 	end
 
 	def search
+
 		ids = @friends.ids
-		ids = ids.push(@user.id)
+		ids = ids.push(current_user.id)
 		@results = User.search(params[:q]).all_friends(ids)
+
 	end
 
 	def notification
 		@friend = User.find_by(id: params["friend_id"])
 		@token = SecureRandom.uuid.gsub(/\-/,'')
-		UserMailer.notification(@user, @friend, @token).deliver_later
-		@userfriend = @user.user_friends.build(friend_id: @friend.id,token: @token,status: "pending")
-		if @userfriend.save
-			redirect_to user_dashboards_path(@user.id)
+		UserMailer.notification(current_user, @friend, @token).deliver_later
+		current_userfriend = current_user.user_friends.build(friend_id: @friend.id,token: @token,status: "pending")
+		if current_userfriend.save
+			redirect_to user_dashboards_path(current_user.id)
 		else
-			redirect_to user_dashboards_path(@user.id)
+			redirect_to user_dashboards_path(current_user.id)
 		end
 	end
 
@@ -36,21 +38,21 @@ class FriendsController < ApplicationController
 	end
 	
 	def accept
-		@userfriend = UserFriend.find_by(token: params["token"])
-		if @userfriend.status == "accept"
+		current_userfriend = UserFriend.find_by(token: params["token"])
+		if current_userfriend.status == "accept"
 			flash[:notice] = "Already added"
-		elsif @userfriend.token == params["token"] && @user.id == @userfriend.friend_id
-			mutual =  @user.user_friends.build(token: @userfriend.token,friend_id: @userfriend.user_id, status: "accept")
-			@userfriend.status = "accept"
-			flash[:notice] = mutual.save && @userfriend.save ? "Friend Added" : "Could not added"
+		elsif current_userfriend.token == params["token"] && current_user.id == current_userfriend.friend_id
+			mutual =  current_user.user_friends.build(token: current_userfriend.token,friend_id: current_userfriend.user_id, status: "accept")
+			current_userfriend.status = "accept"
+			flash[:notice] = mutual.save && current_userfriend.save ? "Friend Added" : "Could not added"
 		else
 			flash[:notice] = "Invalid Link"
-			redirect_to user_dashboards_path(@user.id) and return
+			redirect_to user_dashboards_path(current_user.id) and return
 		end
-		redirect_to user_dashboards_path(@user.id)
-		# if @userfriend.token == params["token"] && session[:user_id]==@userfriend.friend_id
+		redirect_to user_dashboards_path(current_user.id)
+		# if current_userfriend.token == params["token"] && session[:user_id]==current_userfriend.friend_id
 		# 	debugger
-		# 	mutual =  @user.user_friends.build(token: @userfriend.token,friend_id: @userfriend.user_id, status: "accept")
+		# 	mutual =  current_user.user_friends.build(token: current_userfriend.token,friend_id: current_userfriend.user_id, status: "accept")
 		# 	if mutual.save
 		# 		flash[:notice] = "Friend Added"
 		# 	else
@@ -58,29 +60,29 @@ class FriendsController < ApplicationController
 		# 	end
 		# end
 
-		# if @userfriend.status == "accept"
+		# if current_userfriend.status == "accept"
 		# 		flash[:notice] = "Already added"
-		# 		redirect_to user_dashboards_path(user_id: @user.id)
+		# 		redirect_to user_dashboards_path(user_id: current_user.id)
 		# else
-		# 	if @userfriend.token == params["token"] && session[:user_id]==@userfriend.friend_id
-		# 		@userfriend.status = "accept"
-		# 		if  @userfriend.save
+		# 	if current_userfriend.token == params["token"] && session[:user_id]==current_userfriend.friend_id
+		# 		current_userfriend.status = "accept"
+		# 		if  current_userfriend.save
 		# 			flash[:notice] = "Friend added"	
-		# 			redirect_to user_dashboards_path(user_id: @user.id)
+		# 			redirect_to user_dashboards_path(user_id: current_user.id)
 		# 		end
 		# 	else
 		# 		flash[:notice] = "Invalid Link"
-		# 		redirect_to user_dashboards_path(user_id: @user.id)
+		# 		redirect_to user_dashboards_path(user_id: current_user.id)
 		# 	end
 		# end
 	end
 
 	def destroy
 		friend = UserFriend.find_by("friend_id = ? AND user_id = ?",params[:id],params[:user_id])
-		# friend_entries = @user.user_friends.where("friend_id = ?",params[:id])
+		# friend_entries = current_user.user_friends.where("friend_id = ?",params[:id])
 		friend_entries = UserFriend.where(token: friend.token)
 		friend_entries.destroy_all if friend_entries.present?
-		redirect_to user_friends_path(@user.id) 
+		redirect_to user_friends_path(current_user.id) 
 	end
 
 	def edit
@@ -91,6 +93,6 @@ class FriendsController < ApplicationController
 
 	private
 		def get_friends
-			@friends = @user.friends.confirm_friend
+			@friends = current_user.friends.confirm_friend
 		end
 end
