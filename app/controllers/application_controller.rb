@@ -10,19 +10,15 @@ class ApplicationController < ActionController::Base
 
   protected
 
-    def configure_permitted_parameters
-      
-      # if params[:action] == 'create'
-      #   devise_parameter_sanitizer.permit(:sign_up) do |user_params|
-      #     user_params.permit(:firstname,:lastname)
-      #   end
-      # end
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:firstname, :lastname,:gender,:dob])
 
-      
-    end
+    # devise_parameter_sanitizer.for(:sign_up) { |u|
+    #    u.permit(:firstname, :user_detail_attributes => [:address,:city,:pincode]) 
+    # }
+  end
 
     # def configure_permitted_parameters
-    #   debugger
     #   devise_parameter_sanitizer.permit(:sign_up, keys: [:avatar])
     # end
 end

@@ -20,7 +20,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # PUT /resource
   def update
     current_user.avatar = params[:user][:avatar]
-    if current_user.update(params.require(:user).permit(:avatar))
+    if current_user.update(user_params)
       redirect_to dashboards_path
     else
       render 'edit'
@@ -43,7 +43,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   protected
-
+    def user_params
+      params.require(:user).permit(:firstname, :lastname, :email, :password, :gender, :dob, user_detail_attributes: [:address, :city, :pincode, :phone] )
+    end
   # def after_update_path_for(resource)
   #   case resource
   #   when :user, User
@@ -55,7 +57,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_up_params
-  #   devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute])
+  #   devise_parameter_sanitizer.permit(:sign_up, keys: [:])
   # end
 
   # If you have extra params to permit, append them to the sanitizer.

@@ -36,6 +36,8 @@ Rails.application.routes.draw do
       end
 
       resources :friends do
+        get :notification
+        
         collection do
           # get :verify
           get '/:token/accept', to:'friends#accept', as: 'accept'

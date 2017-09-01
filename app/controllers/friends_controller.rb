@@ -15,11 +15,9 @@ class FriendsController < ApplicationController
 	end
 
 	def search
-
 		ids = @friends.ids
 		ids = ids.push(current_user.id)
 		@results = User.search(params[:q]).all_friends(ids)
-
 	end
 
 	def notification
@@ -28,9 +26,9 @@ class FriendsController < ApplicationController
 		UserMailer.notification(current_user, @friend, @token).deliver_later
 		current_userfriend = current_user.user_friends.build(friend_id: @friend.id,token: @token,status: "pending")
 		if current_userfriend.save
-			redirect_to user_dashboards_path(current_user.id)
+			redirect_to dashboards_path
 		else
-			redirect_to user_dashboards_path(current_user.id)
+			redirect_to dashboards_path
 		end
 	end
 
@@ -47,11 +45,10 @@ class FriendsController < ApplicationController
 			flash[:notice] = mutual.save && current_userfriend.save ? "Friend Added" : "Could not added"
 		else
 			flash[:notice] = "Invalid Link"
-			redirect_to user_dashboards_path(current_user.id) and return
+			redirect_to dashboards_path and return
 		end
-		redirect_to user_dashboards_path(current_user.id)
+		redirect_to dashboards_path
 		# if current_userfriend.token == params["token"] && session[:user_id]==current_userfriend.friend_id
-		# 	debugger
 		# 	mutual =  current_user.user_friends.build(token: current_userfriend.token,friend_id: current_userfriend.user_id, status: "accept")
 		# 	if mutual.save
 		# 		flash[:notice] = "Friend Added"

@@ -55,7 +55,6 @@ class AvatarUploader < CarrierWave::Uploader::Base
   end
 
   # version :large do
-  #   # debugger
   #   process resize_to_fit: [200, 200], :if => :album?
   #   # process :resize_to_limit => []
   # end
@@ -72,25 +71,22 @@ class AvatarUploader < CarrierWave::Uploader::Base
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
   # def filename
-  #   # debugger
   #   "original_#{model.avatar.file.extension}" if original_filename
   # end
 
   private
   # def image?(new_file)
-  #   debugger
   #   self.file.content_type.include? 'image'
   # end
 
   # def user?(img)
-  #   # debugger
   #   # image = MiniMagick::Image.open(img.file)
   #   # image[:height]
   #   true if model.class.name == "User"
   # end
 
   # def album?(img)
-  #   # debugger
+
   #   true if model.class.name == "Album"
   # end
 end

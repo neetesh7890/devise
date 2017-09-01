@@ -17,7 +17,7 @@ class User < ApplicationRecord
   attr_accessor :size, :avatar
   
   #Associations
-  has_one :user_detail, dependent: :destroy
+  has_one :user_detail, dependent: :destroy, autosave: true
   has_many :albums, dependent: :destroy
   has_many :user_friends, dependent: :destroy, inverse_of: :user
   has_many :friends, through: :user_friends
@@ -59,13 +59,10 @@ class User < ApplicationRecord
   end 
 
   # def self.i_user(image_object)
-  #   debugger
   #   if image_object.present?
   #     a = AvatarUploader.new
   #     a.small?(image_object)
-  #     debugger
   #   else
-  #     debugger
   #   end
   # end
 
