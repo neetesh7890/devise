@@ -6,18 +6,19 @@ class User < ApplicationRecord
 
 
   #Validations
-  # validates :firstname, presence: true
   # validates :email, uniqueness: true, presence: true,format: { with: /\A[^@\s]+@([^@.\s]+\.)+[^@.\s]+\z/ }
   # validates :password, presence: true
-  # validates :gender, presence: true
-  # validates :dob, presence: true
-  # validate :avatar_size , if: :avatar?
+  validates :firstname, presence: true
+  validates :lastname, presence: true
+  validates :gender, presence: true
+  validates :dob, presence: true
+  validate :avatar_size , if: :avatar?
 
   #Attributes
   attr_accessor :size, :avatar
   
   #Associations
-  has_one :user_detail, dependent: :destroy, autosave: true
+  has_one :user_detail, dependent: :destroy, :autosave => true
   has_many :albums, dependent: :destroy
   has_many :user_friends, dependent: :destroy, inverse_of: :user
   has_many :friends, through: :user_friends
@@ -39,7 +40,7 @@ class User < ApplicationRecord
     if search.present?
       where('firstname LIKE ?', "%#{search}%")
     else
-      all
+      nil
     end
   end
 

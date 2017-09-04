@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170831054937) do
+ActiveRecord::Schema.define(version: 20170904062127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20170831054937) do
     t.bigint "user_id"
     t.string "album_name"
     t.integer "comment_count"
-    t.integer "count"
+    t.integer "count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_albums_on_user_id"
@@ -84,7 +84,7 @@ ActiveRecord::Schema.define(version: 20170831054937) do
     t.date "dob"
     t.string "avater"
     t.boolean "status_email"
-    t.integer "count"
+    t.integer "count", default: 0
     t.boolean "remember_me"
     t.string "avatar"
     t.index ["email"], name: "index_users_on_email", unique: true

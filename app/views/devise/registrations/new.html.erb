@@ -4,6 +4,7 @@
   <%= devise_error_messages! %>
   
   <!-- added by NG -->
+  <div class="col-md-6 col-sm-offset-3">
     <div class="form-group">
       <%= f.label :firstname, id: "", class: "cols-sm-2 control-label" %>
       <div class="cols-sm-10">
@@ -83,5 +84,5 @@
     </div>
   <!-- End -->
 <% end %>
-
-<%= render "devise/shared/links" %>
+    <%= render "devise/shared/links" %>
+  </div>

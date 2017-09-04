@@ -23,7 +23,7 @@
 			      <% end %>
 					</div>
 					<div class='col-md-1'>
-						<%= link_to 'user_album_path(current_user.id,item.id)', method: :delete ,title:"Remove Album", data: { confirm: 'Are you sure?' }  do%> 
+						<%= link_to album_path(item.id), method: :delete ,title:"Remove Album", data: { confirm: 'Are you sure?' }  do%> 
 							<span class="glyphicon glyphicon-remove"></span>
 			        
 			      <% end %> 	

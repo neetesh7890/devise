@@ -12,21 +12,37 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
+  def edit
+  end
+
+  def update
+    @detail = current_user.user_detail.present? ? current_user.user_detail : current_user.build_user_detail
+    params[:user][:avatar].present? ? current_user.size = params[:user][:avatar].size : current_user.size = 0
+    current_user.avatar = params[:user][:avatar]
+    if current_user.save && @detail.update(user_detail_params)
+      flash[:notice] = "#{current_user.firstname} Your Profile successfully updated"
+      redirect_to dashboards_path
+    else
+      render 'edit'
+    end
+  end
+
+
   # GET /resource/edit
   # def edit
   #   super
   # end
 
   # PUT /resource
-  def update
-    current_user.avatar = params[:user][:avatar]
-    if current_user.update(user_params)
-      redirect_to dashboards_path
-    else
-      render 'edit'
-    end
-    # after_update_path_for(resource)
-  end
+  # def update
+  #   current_user.avatar = params[:user][:avatar]
+  #   if current_user.update(user_params)
+  #     redirect_to dashboards_path
+  #   else
+  #     render 'edit'
+  #   end
+  #   # after_update_path_for(resource)
+  # end
 
   # DELETE /resource
   # def destroy
@@ -43,9 +59,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   protected
-    def user_params
-      params.require(:user).permit(:firstname, :lastname, :email, :password, :gender, :dob, user_detail_attributes: [:address, :city, :pincode, :phone] )
+    def user_detail_params
+      params.require(:user_detail).permit(:address, :city, :pincode, :phone)
     end
+
   # def after_update_path_for(resource)
   #   case resource
   #   when :user, User

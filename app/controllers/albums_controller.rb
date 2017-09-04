@@ -1,9 +1,8 @@
 class AlbumsController < ApplicationController
 	
 	#Actions
-	def index
-		
-		@albums = current_user.albums.order('comment_count DESC').paginate(:page => params[:page], :per_page => 5)
+	def index	
+		@albums = current_user.albums.albums_order_by_comments.paginate(:page => params[:page], :per_page => 5)
 		user_ids = current_user.friends.confirm_friend.ids
 		@friends_albums = Album.where(user_id: user_ids).albums_order_by_comments.paginate(:page => params[:page], :per_page => 5)
 	end
@@ -45,12 +44,14 @@ class AlbumsController < ApplicationController
 			images.each do |image|
 				@album_image = @album.album_images.build
 				@album_image.image_name = image
+			 	@album_image.size = image.size
 			end			
 			if @album.save
 				flash[:notice] = "Album Created"
 				redirect_to albums_path	
 			else
-				redirect_to albums_path	
+				flash[:notice] = "Album did not create size too large"
+				render 'new'
 			end
 		else
 			flash[:notice] = "Album could not uploaded please select atleat one image"
@@ -88,11 +89,15 @@ class AlbumsController < ApplicationController
 		img_names = params["album"]["image_name"] if @album.present?
 		if img_names.present?
 			img_names.each do |image|
-				album_image = @album.album_images.build
-				album_image.image_name = image		
+				@album_image = @album.album_images.build
+				@album_image.image_name = image		
+			 	@album_image.size = image.size
 			end
 			if @album.save
 				redirect_to album_all_album_path(params[:id])
+			else
+				flash[:notice] = "Album did update size too large"
+				render 'my_album_all'
 			end
 		else
 			flash[:notice] = "Album could not update"
@@ -123,8 +128,6 @@ class AlbumsController < ApplicationController
 			redirect_to albums_path(current_user.id)
 		end
 	end
-
-	
 
 	#Private methods
 	private

@@ -75,11 +75,11 @@ class FriendsController < ApplicationController
 	end
 
 	def destroy
-		friend = UserFriend.find_by("friend_id = ? AND user_id = ?",params[:id],params[:user_id])
+		friend = UserFriend.find_by("friend_id = ? AND user_id = ?",params[:id],current_user.id)
 		# friend_entries = current_user.user_friends.where("friend_id = ?",params[:id])
 		friend_entries = UserFriend.where(token: friend.token)
 		friend_entries.destroy_all if friend_entries.present?
-		redirect_to user_friends_path(current_user.id) 
+		redirect_to friends_path
 	end
 
 	def edit

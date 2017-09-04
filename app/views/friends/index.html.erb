@@ -45,8 +45,8 @@
 	<div class = 'col-md-6 '>
 			<div class='row border-1px'>
 				<div class='col-md-4 image'>
-					 <% if friend.avater.present? %>
-	    		 <%= image_tag "/uploads/#{friend.avater}", class: 'img-thumbnail'	%>
+					 <% if friend.avatar.present? %>
+	    		 <%= image_tag friend.avatar_url, class: 'img-thumbnail'	%>
 	    	   <%	end %>
 	    	</div>
 
@@ -55,7 +55,7 @@
 				</div>
 
 				<div class='col-md-2'>
-					<%= link_to 'Remove Friend', friend_path(friend.id)' , method: :delete, data: { confirm: 'Remove Friend?' } ,class: "btn btn-danger btn-sm remove-friend" %>
+					<%= link_to 'Remove Friend', friend_path(friend.id) , method: :delete, data: { confirm: 'Remove Friend?' } ,class: "btn btn-danger btn-sm remove-friend" %>
 				</div>
 			</div>
 	</div>

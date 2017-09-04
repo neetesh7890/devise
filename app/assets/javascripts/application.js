@@ -20,7 +20,6 @@
 
 function submit_btn() {
   album = $("#album_id").val()
-  debugger
   $.ajax({
     url: "/users" + "/albums/" + album + "/comments/remark",
     type: 'POST',

@@ -5,50 +5,51 @@ Rails.application.routes.draw do
   devise_scope :user do
     get 'users/sign_in', to: 'users/sessions#new'
     
-
     devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations',passwords: 'users/passwords' }
+    root 'users/sessions#new'
 
     #---Added by NG---
-   
     scope '/users' do
-      resources :albums do     
+      
+
+      resources :albums, except: :show do     
         collection do
           get '/my_album', to: "albums#my_album",as: 'my_album'
           get '/friend_album', to: "albums#friend_album",as: 'friend_album'
-        end
-        
+        end  
         member do
           get 'my_album_all', to:'albums#my_album_all', as: 'album_all'
           delete 'destroy_pic'
         end
         
-        resources :comments do
+        resources :comments,only: [:index,:destroy,:new,:create] do
           collection do
             get 'album_comments', to:'comments#album_comments', as: 'comments'
             post '/remark', to:'comments#remark', as: 'remark'
             post '/comments_remark', to:'comments#comments_remark', as: 'cmts_remark'
           end
-
           member do
             delete 'comment_destroy', to: 'comments#comment_destroy', as: 'cmts_destroy'
           end
         end
       end
 
-      resources :friends do
+      resources :friends, only: [:index,:show,:destroy] do
         get :notification
         
         collection do
-          # get :verify
           get '/:token/accept', to:'friends#accept', as: 'accept'
         end
       end
       post 'friends/search', to:'friends#search'
     end
-    
     resources :dashboards, only: :index
-    root 'users/sessions#new'
   end
+
+  
+
+
+
 
   #   resources :users do
   #     # get :verify

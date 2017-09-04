@@ -24,6 +24,9 @@
             <% if current_user.avatar.present? %>
             <li><a><%= image_tag current_user.avatar_url, height: "30px",width: "40px" %></a></li>
             <% end %>
+            <%if current_user.present?%>
+              <li><%= link_to current_user.firstname,edit_user_registration_path %></li>
+            <% end %>
             <li><%= link_to "Manage Album", albums_path  %></li>
             <li><%= link_to 'Friends', friends_path %></li>
             <li><%= link_to 'Edit Info', edit_user_registration_path %></li>
@@ -50,7 +53,7 @@
             Logged in as <strong><%= current_user.email %></strong>.
             <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
             <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
-          <% else %>
+          <% elsif controller_name != 'registrations' %>
             <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
             <%= link_to "Login", "javascript:void(0);", :class => 'navbar-link', data: { toggle: "modal", target: '#mylogin'} %>
           <% end %>
