@@ -1,4 +1,7 @@
 class AlbumImage < ApplicationRecord
+  
+  include ImageSize
+
    #Association
   belongs_to :album
 
@@ -9,7 +12,4 @@ class AlbumImage < ApplicationRecord
   mount_uploader :image_name, AvatarUploader
 
   attr_accessor :size
-  def avatar_size
-    errors.add(:base, "Image should be less than 5MB") if size > 5.megabytes
-  end 
 end
