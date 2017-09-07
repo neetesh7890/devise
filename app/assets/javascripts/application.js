@@ -19,6 +19,7 @@
 //= require_tree .
 
 function submit_btn() {
+  $(this).value = "";
   album = $("#album_id").val()
   $.ajax({
     url: "/users" + "/albums/" + album + "/comments/remark",
