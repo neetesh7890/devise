@@ -16,7 +16,7 @@ class CommentsController < ApplicationController
 	def remark
 		# @album = Album.find_by(id: params[:album_id])
 		@comment = @album.comments.build(comment_name: params[:new_comment], user_id: current_user.id)
-		@album.increment!(:comment_count) #Auto increment comment_count in albums
+		# @album.increment!(:comment_count) #Auto increment comment_count in albums
 		# if @comment.save
 		# 	redirect_to user_album_comments_path(@user.id,params[:album_id])
 		# else
@@ -32,7 +32,7 @@ class CommentsController < ApplicationController
 	def destroy	
 		# @comment = @user.albums.find_by(id: params[:album_id]).comments.find(params[:id])
 		@comment = Comment.find(params[:id])
-		Album.find_by(id: params[:album_id]).decrement!(:comment_count) #Auto decrement comment_count in albums
+		# Album.find_by(id: params[:album_id]).decrement!(:comment_count) #Auto decrement comment_count in albums
 		@comment = @comment.destroy
 		respond_to do |format|
 			format.js
