@@ -1,18 +1,19 @@
 class AlbumsController < ApplicationController
 	
+	before_action :get_friend_albums, only: [:friend_album, :index]
 	#Actions
 	def index	
-		@albums = current_user.albums.albums_order_by_comments.paginate(:page => params[:page], :per_page => 5)
-		user_ids = current_user.friends.confirm_friend.ids
-		@friends_albums = Album.where(user_id: user_ids).albums_order_by_comments.paginate(:page => params[:page], :per_page => 5)
+		@albums = current_user.albums.ordered_desc.paginate(:page => params[:page], :per_page => 5)
+		# user_ids = current_user.friends.confirm_friend.ids
+		@friends_albums = @friend_albums.paginate(:page => params[:page], :per_page => 5)
 	end
 
 	def my_album
 	end
 
 	def friend_album
-		user_ids = current_user.friends.confirm_friend.pluck(:id)
-		@friend_albums = Album.where(user_id: user_ids).albums_order_by_comments
+		# user_ids = current_user.friends.confirm_friend.ids
+		# @friend_albums = Album.where(user_id: user_ids).ordered_desc
 	end
 	
 	def my_album_all
@@ -127,6 +128,11 @@ class AlbumsController < ApplicationController
 			flash[:notice] = "Album could not deleted"
 			redirect_to albums_path(current_user.id)
 		end
+	end
+
+	def get_friend_albums
+		user_ids = current_user.friends.confirm_friend.ids
+		@friend_albums = Album.where(user_id: user_ids).ordered_desc
 	end
 
 	#Private methods

@@ -38,25 +38,24 @@ class User < ApplicationRecord
   #Public Class Methods
   def self.search(search)
     if search.present?
-      where('firstname LIKE ?', "%#{search}%")
+      where('lower(firstname) LIKE ?', "%#{search.downcase}%")
     else
       nil
     end
   end
 
-  def self.authenticate(emailath, password)
-    user = User.find_by(email: emailath)
-    #VK : Optimize below code and reduce below conditions. done
-    if user.present? && password == user.password && user.status_email
-      user
-    else
-      nil
-    end
-  end
+  # def self.authenticate(emailath, password)
+  #   user = User.find_by(email: emailath)
+  #   #VK : Optimize below code and reduce below conditions. done
+  #   if user.present? && password == user.password && user.status_email
+  #     user
+  #   else
+  #     nil
+  #   end
+  # end
 
   #Public methods
   def avatar_size #VK : Need to put into common place and understand how to use it into multiple models.
-    debugger
     errors.add(:base, "Image should be less than 5MB") if size > 5.megabytes
   end 
 
