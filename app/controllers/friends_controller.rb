@@ -1,17 +1,13 @@
 class FriendsController < ApplicationController
 	
-	#Filters skip
-	# skip_before_action :access_check, only: [:notification,:accept,:show,:search,:destroy]
-
+	#Filters 
 	before_action :get_friends, only: [:index,:show,:search]
 
 	#Actions
 	def index
-		# @friends = current_user.friends.confirm_friend
 	end
 
 	def show
-		# @friends = current_user.friends.confirm_friend
 	end
 
 	def search
@@ -48,35 +44,10 @@ class FriendsController < ApplicationController
 			redirect_to dashboards_path and return
 		end
 		redirect_to dashboards_path
-		# if current_userfriend.token == params["token"] && session[:user_id]==current_userfriend.friend_id
-		# 	mutual =  current_user.user_friends.build(token: current_userfriend.token,friend_id: current_userfriend.user_id, status: "accept")
-		# 	if mutual.save
-		# 		flash[:notice] = "Friend Added"
-		# 	else
-		# 		flash[:notice] = "Could not added"
-		# 	end
-		# end
-
-		# if current_userfriend.status == "accept"
-		# 		flash[:notice] = "Already added"
-		# 		redirect_to user_dashboards_path(user_id: current_user.id)
-		# else
-		# 	if current_userfriend.token == params["token"] && session[:user_id]==current_userfriend.friend_id
-		# 		current_userfriend.status = "accept"
-		# 		if  current_userfriend.save
-		# 			flash[:notice] = "Friend added"	
-		# 			redirect_to user_dashboards_path(user_id: current_user.id)
-		# 		end
-		# 	else
-		# 		flash[:notice] = "Invalid Link"
-		# 		redirect_to user_dashboards_path(user_id: current_user.id)
-		# 	end
-		# end
 	end
 
 	def destroy
 		friend = UserFriend.find_by("friend_id = ? AND user_id = ?",params[:id],current_user.id)
-		# friend_entries = current_user.user_friends.where("friend_id = ?",params[:id])
 		friend_entries = UserFriend.where(token: friend.token)
 		friend_entries.destroy_all if friend_entries.present?
 		redirect_to friends_path

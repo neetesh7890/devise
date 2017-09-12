@@ -1,10 +1,10 @@
 class AlbumsController < ApplicationController
 	
 	before_action :get_friend_albums, only: [:friend_album, :index]
+	
 	#Actions
 	def index	
 		@albums = current_user.albums.ordered_desc.paginate(:page => params[:page], :per_page => 5)
-		# user_ids = current_user.friends.confirm_friend.ids
 		@friends_albums = @friend_albums.paginate(:page => params[:page], :per_page => 5)
 	end
 
@@ -12,8 +12,6 @@ class AlbumsController < ApplicationController
 	end
 
 	def friend_album
-		# user_ids = current_user.friends.confirm_friend.ids
-		# @friend_albums = Album.where(user_id: user_ids).ordered_desc
 	end
 	
 	def my_album_all
@@ -58,28 +56,6 @@ class AlbumsController < ApplicationController
 			flash[:notice] = "Album could not uploaded please select atleat one image"
 			redirect_to new_album_path	
 		end
-
-		# img_names = params["album"]["image_name"]
-		# if img_names.present?
-			# img_names.each do |img_name|
-			# 	@albumimage = @album.album_images.new
-			# 	pic_name = img_name.original_filename
-			# 	File.open(Rails.root.join('public', 'uploads', pic_name), 'wb') do |file|
-		 #      file.write(img_name.read)
-		 #        @albumimage.image_name = pic_name
-		 #      end
-			# end
-
-			# if @album.save
-		# 		flash[:notice] = "Album Created"
-		# 		redirect_to user_albums_path(current_user.id)	
-		# 	else
-		# 		redirect_to user_albums_path(current_user.id)		
-		# 	end
-		# else
-		# 	flash[:notice] = "Album could not be created please select atleast one image"
-		# 	redirect_to user_albums_path(current_user.id)		
-		# end
 	end
 
 	def edit
@@ -104,19 +80,6 @@ class AlbumsController < ApplicationController
 			flash[:notice] = "Album could not update"
 			redirect_to album_all_album_path(params[:id])
 		end
-		# unless img_names.nil?
-		# 	img_names.each do |img_name|
-		# 		@albumimage = AlbumImage.new
-		# 		@albumimage.album_id = @album.id
-		# 		pic_name = img_name.original_filename
-		# 		File.open(Rails.root.join('public', 'uploads', pic_name), 'wb') do |file|
-		#       file.write(img_name.read)
-		# 		@albumimage.image_name = pic_name
-		#     end
-		# 		redirect_to album_all_user_album_path(current_user.id,params[:id]) and return unless @albumimage.save	 #true par nahi chalega false par redirect to		        
-		# 		flash[:notice] = "Album Updated"
-		# 	end
-		# end
 	end
 
 	def destroy
@@ -136,8 +99,8 @@ class AlbumsController < ApplicationController
 	end
 
 	#Private methods
-	private
-		def album_params
-      params.require(:album).permit(:name,:album_name,:image_name)
-    end
+		private
+			def album_params
+	      params.require(:album).permit(:name,:album_name,:image_name)
+	    end
 end
