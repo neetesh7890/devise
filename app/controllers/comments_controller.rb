@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
-	
+	before_action :get_comment, only: [:destroy]
+
 	#Filters skip
 	skip_before_action :verify_authenticity_token, :only => [:remark]
 
@@ -8,7 +9,6 @@ class CommentsController < ApplicationController
 
 	#Actions
 	def index
-		# @album = @user.albums.find_by(id: params[:album_id])
 		@comment = Comment.new
 		@friend = User.find_by(id: @album.user_id)
 	end
@@ -22,14 +22,10 @@ class CommentsController < ApplicationController
 	end
 
 	def destroy	
-		@comment = Comment.find(params[:id])
 		@comment = @comment.destroy
 		respond_to do |format|
 			format.js
 		end
-	end
-
-	def album_comments
 	end
 
 	def new
@@ -50,6 +46,10 @@ class CommentsController < ApplicationController
 
 	#Private methods
 	private
+		def get_comment
+			@comment = Comment.find(params[:id])
+		end
+
 		def get_album
 			@album = Album.find_by(id: params[:album_id])
 		end

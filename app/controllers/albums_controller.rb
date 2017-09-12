@@ -8,27 +8,26 @@ class AlbumsController < ApplicationController
 		@friends_albums = @friend_albums.paginate(:page => params[:page], :per_page => 5)
 	end
 
+  # /album/my
 	def my_album
 	end
 
+  # /album/friend
 	def friend_album
 	end
 	
-	def my_album_all
-		@album = current_user.albums.find(params[:id])
-		@albumimage = AlbumImage.new
-	end
-
 	def destroy_pic
 		@image = current_user.albums.find_by(id: params[:id]).album_images.find_by(id: params[:pic_id])	
 		if @image.destroy
-			redirect_to album_all_album_path(params[:id])
+			redirect_to album_path(params[:id])
 		else
-			redirect_to album_all_album_path(params[:id])
+			redirect_to album_path(params[:id])
 		end
 	end
 
 	def show
+		@album = current_user.albums.find(params[:id])
+		@albumimage = AlbumImage.new
 	end
 
 	def new
@@ -71,31 +70,26 @@ class AlbumsController < ApplicationController
 			 	@album_image.size = image.size
 			end
 			if @album.save
-				redirect_to album_all_album_path(params[:id])
+				redirect_to album_path(params[:id])
 			else
 				flash[:notice] = "Album did update size too large"
 				render 'my_album_all'
 			end
 		else
 			flash[:notice] = "Album could not update"
-			redirect_to album_all_album_path(params[:id])
+			redirect_to album_path(params[:id])
 		end
 	end
 
 	def destroy
 		@album = current_user.albums.find_by(id: params[:id])
-		if @album.destroy
-			flash[:notice] = "Album deleted"
-			redirect_to albums_path(current_user.id)
-		else
-			flash[:notice] = "Album could not deleted"
-			redirect_to albums_path(current_user.id)
-		end
+		flash[:notice] = @album.destroy ? "Album deleted" : "Album could not deleted"
+		redirect_to albums_path(current_user.id)
 	end
 
 	def get_friend_albums
 		user_ids = current_user.friends.confirm_friend.ids
-		@friend_albums = Album.where(user_id: user_ids).ordered_desc
+		@friend_albums = Album.friends_albums(user_ids).ordered_desc #move it to scope/ :done
 	end
 
 	#Private methods

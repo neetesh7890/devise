@@ -21,11 +21,8 @@ class FriendsController < ApplicationController
 		@token = SecureRandom.uuid.gsub(/\-/,'')
 		UserMailer.notification(current_user, @friend, @token).deliver_later
 		current_userfriend = current_user.user_friends.build(friend_id: @friend.id,token: @token,status: "pending")
-		if current_userfriend.save
-			redirect_to dashboards_path
-		else
-			redirect_to dashboards_path
-		end
+		current_userfriend.save
+		redirect_to dashboards_path
 	end
 
 	def new
@@ -33,7 +30,9 @@ class FriendsController < ApplicationController
 	
 	def accept
 		current_userfriend = UserFriend.find_by(token: params["token"])
-		if current_userfriend.status == "accept"
+		accepted = UserFriend.accepted?(params["token"])
+		
+		if accepted #=> make method into model for each status like accepted?, rejectd? ....  current_userfriend.accepted?
 			flash[:notice] = "Already added"
 		elsif current_userfriend.token == params["token"] && current_user.id == current_userfriend.friend_id
 			mutual =  current_user.user_friends.build(token: current_userfriend.token,friend_id: current_userfriend.user_id, status: "accept")
@@ -47,9 +46,9 @@ class FriendsController < ApplicationController
 	end
 
 	def destroy
-		friend = UserFriend.find_by("friend_id = ? AND user_id = ?",params[:id],current_user.id)
-		friend_entries = UserFriend.where(token: friend.token)
-		friend_entries.destroy_all if friend_entries.present?
+		friend = UserFriend.find_by("friend_id = ? AND user_id = ?", params[:id], current_user.id)
+		entries = UserFriend.entries_to_be_removed(friend.token)
+		entries.destroy_all if entries.present?
 		redirect_to friends_path
 	end
 

@@ -2,7 +2,7 @@ class AlbumImage < ApplicationRecord
   
   include ImageSize
 
-   #Association
+  #Association
   belongs_to :album
 
   #Validations

@@ -8,7 +8,6 @@ class User < ApplicationRecord
 
   #Validations
   # validates :email, uniqueness: true, presence: true,format: { with: /\A[^@\s]+@([^@.\s]+\.)+[^@.\s]+\z/ }
-  # validates :password, presence: true
   validates_presence_of :firstname, :lastname,:gender,:dob
   validate :avatar_size , if: :avatar?
 
@@ -27,8 +26,6 @@ class User < ApplicationRecord
   scope :confirm_friend, ->{ where("user_friends.status ='accept'") }
   scope :pending_friend, ->{ where("user_friends.status ='pending'") }# how to merge these two lines into one
   scope :all_friends, -> (ids) { where.not(id: ids) }
-  # scope :album_has_more_comments, ->{ select('albums.id').where("user_friends.status='accept'").order('comment_count DESC') }
-  # scope :not_friend, ->{ where("user_friends.status <>'accept'") }
   
   #Uploader
   mount_uploader :avatar, AvatarUploader
@@ -37,35 +34,4 @@ class User < ApplicationRecord
   def self.search(search)
     search.present? ? where('lower(firstname) LIKE ?', "%#{search.downcase}%") : nil    
   end
-
-  # def self.authenticate(emailath, password)
-  #   user = User.find_by(email: emailath)
-  #   #VK : Optimize below code and reduce below conditions. done
-  #   if user.present? && password == user.password && user.status_email
-  #     user
-  #   else
-  #     nil
-  #   end
-  # end
-
-  #Public methods
-  # def avatar_size #VK : Need to put into common place and understand how to use it into multiple models.
-  #   errors.add(:base, "Image should be less than 5MB") if size > 5.megabytes
-  # end 
-
-  # def self.i_user(image_object)
-  #   if image_object.present?
-  #     a = AvatarUploader.new
-  #     a.small?(image_object)
-  #   else
-  #   end
-  # end
-
-  # after_initialize do |user|
-  #   puts "You have initialized an object!"
-  # end
-
-  # after_find do |user|
-  #   puts "You have found an object!"
-  # end   
 end

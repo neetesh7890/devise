@@ -1,12 +1,12 @@
 class UserFriend < ApplicationRecord
-   #Associations
+  
+  #Associations
   belongs_to :user, inverse_of: :user_friends
   belongs_to :friend, class_name: "User" #friend ka association user se
   
+  scope :entries_to_be_removed, -> (by_token) { where(token: by_token) }
 
-  # after_destroy :delete_dependent
-
-  # def delete_dependent
-  #   UserFriend.where(token: self.token).destroy_all
-  # end
+  def self.accepted?(token)
+    self.find_by(token: token).status == "accept" ? true : false
+  end
 end
