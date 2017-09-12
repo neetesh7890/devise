@@ -8,7 +8,6 @@ Rails.application.routes.draw do
     devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations',passwords: 'users/passwords' }
     root 'users/sessions#new'
 
-    #---Added by NG---
     scope '/users' do
     
       resources :albums do     

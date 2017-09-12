@@ -31,7 +31,6 @@ class FriendsController < ApplicationController
 	def accept
 		current_userfriend = UserFriend.find_by(token: params["token"])
 		accepted = UserFriend.accepted?(params["token"])
-		
 		if accepted #=> make method into model for each status like accepted?, rejectd? ....  current_userfriend.accepted?
 			flash[:notice] = "Already added"
 		elsif current_userfriend.token == params["token"] && current_user.id == current_userfriend.friend_id
