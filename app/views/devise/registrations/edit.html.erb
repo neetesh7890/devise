@@ -6,7 +6,7 @@
   <%= devise_error_messages! %>
 
   <!-- Added by NG -->
-    <%= fields_for :user_detail, resource.user_detail do |ud| %>
+    <%= f.fields_for :user_detail do |ud| %>
       <div class="col-md-1 col-md-offset-4 center">
         <%= ud.label :address %>
       </div>
@@ -38,28 +38,29 @@
         <%= ud.text_field :phone %>
       </div>
 
+      <div class="col-md-1 col-md-offset-4 center">
+        <%= f.label :email %><br />
+      </div>
+
+      <div class="col-md-7">
+        <%= f.email_field :email, autofocus: true %>
+      </div>
+
+      <div class="col-md-1 col-md-offset-4 center">
+        <%= f.label :avatar %>
+      </div>
+
+      <div class="col-md-7">
+        <%= f.file_field :avatar %>
+      </div>
+
+      <div class="col-md-7 col-md-offset-5">
+        <%= ud.submit "Update", class: 'btn btn-default' %>
+      </div>
+
     <% end %>
   <!-- end -->
 
-    <div class="col-md-1 col-md-offset-4 center">
-      <%= f.label :email %><br />
-    </div>
-
-    <div class="col-md-7">
-      <%= f.email_field :email, autofocus: true %>
-    </div>
-
-    <div class="col-md-1 col-md-offset-4 center">
-      <%= f.label :avatar %>
-    </div>
-
-    <div class="col-md-7">
-      <%= f.file_field :avatar %>
-    </div>
-
-    <div class="col-md-7 col-md-offset-5">
-      <%= f.submit "Update", class: 'btn btn-default' %>
-    </div>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>

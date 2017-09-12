@@ -19,14 +19,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @detail = current_user.user_detail.present? ? current_user.user_detail : current_user.build_user_detail
     current_user.size = params[:user][:avatar].present? ? params[:user][:avatar].size : 0
     current_user.avatar = params[:user][:avatar]
-    if @detail.update(user_detail_params) && current_user.save
+    if current_user.update(user_params)
       flash[:notice] = "#{current_user.firstname} Your Profile successfully updated"
       redirect_to dashboards_path
     else
       render 'edit'
     end
   end
-
 
   # GET /resource/edit
   # def edit
@@ -60,8 +59,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   protected
 
-  def user_detail_params
-    params.require(:user_detail).permit(:address, :city, :pincode, :phone)
+  def user_params
+    params.require(:user).permit(:firstname, :lastname, :email, :password, :gender, :dob, user_detail_attributes: [:address, :city, :pincode, :phone] )
   end
 
   # def after_update_path_for(resource)
