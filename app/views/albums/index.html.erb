@@ -35,12 +35,7 @@
 
 				<div class='col-md-12'>
 					<%= link_to album_comments_path(item.id) do %>
-						
-						<% if item.album_images.first.present? %>
-							<%= image_tag item.album_images.first.image_name_url(:size_135_180) , class: 'img-thumbnail' %>
-						<% else %>
-							No attachment available!
-						<% end %>
+						<%= image_tag first_image(item) , class: 'img-thumbnail' %>
 					<% end %>
 				</div>
 

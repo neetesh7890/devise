@@ -4,14 +4,12 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  include ImageSize
 
   #Validations
   # validates :email, uniqueness: true, presence: true,format: { with: /\A[^@\s]+@([^@.\s]+\.)+[^@.\s]+\z/ }
   # validates :password, presence: true
-  validates :firstname, presence: true
-  validates :lastname, presence: true
-  validates :gender, presence: true
-  validates :dob, presence: true
+  validates_presence_of :firstname, :lastname,:gender,:dob
   validate :avatar_size , if: :avatar?
 
   #Attributes
@@ -37,11 +35,7 @@ class User < ApplicationRecord
 
   #Public Class Methods
   def self.search(search)
-    if search.present?
-      where('lower(firstname) LIKE ?', "%#{search.downcase}%")
-    else
-      nil
-    end
+    search.present? ? where('lower(firstname) LIKE ?', "%#{search.downcase}%") : nil    
   end
 
   # def self.authenticate(emailath, password)
@@ -55,9 +49,9 @@ class User < ApplicationRecord
   # end
 
   #Public methods
-  def avatar_size #VK : Need to put into common place and understand how to use it into multiple models.
-    errors.add(:base, "Image should be less than 5MB") if size > 5.megabytes
-  end 
+  # def avatar_size #VK : Need to put into common place and understand how to use it into multiple models.
+  #   errors.add(:base, "Image should be less than 5MB") if size > 5.megabytes
+  # end 
 
   # def self.i_user(image_object)
   #   if image_object.present?

@@ -19,7 +19,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @detail = current_user.user_detail.present? ? current_user.user_detail : current_user.build_user_detail
     params[:user][:avatar].present? ? current_user.size = params[:user][:avatar].size : current_user.size = 0
     current_user.avatar = params[:user][:avatar]
-    if current_user.save && @detail.update(user_detail_params)
+    
+    if current_user.save && @detail.update(params.require(:user_detail).permit(:address, :city, :pincode, :phone))
       flash[:notice] = "#{current_user.firstname} Your Profile successfully updated"
       redirect_to dashboards_path
     else
@@ -59,9 +60,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   protected
-    def user_detail_params
-      params.require(:user_detail).permit(:address, :city, :pincode, :phone)
-    end
 
   # def after_update_path_for(resource)
   #   case resource
