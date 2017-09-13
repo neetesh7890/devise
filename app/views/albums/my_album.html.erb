@@ -18,7 +18,7 @@
 			
 				<% image = item.album_images.first %>	
 					<div class='col-md-1 col-sm-offset-7'>
-						<%= link_to  album_all_album_path(item.id),title:"Add More pic" do%>
+						<%= link_to  album_path(item.id),title:"Add More pic" do%>
 			        <span class="glyphicon glyphicon-plus"></span>
 			      <% end %>
 					</div>
@@ -31,10 +31,10 @@
 					
 					<div class='col-md-12'>
 						<%= link_to album_comments_path(item.id) do %>
-							<% if item.album_images.first.image_name.present? %>
+							<% if item.album_images.first.present? %>
 								<%= image_tag item.album_images.first.image_name_url(:size_135_180) , class: 'img-thumbnail' %>
 							<% else %>
-								<%= image_tag "/uploads/", class: 'img-thumbnail' %>
+								<%= image_tag "images.png", class: 'img-thumbnail' %>
 							<% end %>
 						<% end %>
 					</div>

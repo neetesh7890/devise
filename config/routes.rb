@@ -2,9 +2,9 @@ Rails.application.routes.draw do
 
   get 'dashboards/index'
 
+  #To map with user controller
   devise_scope :user do
-    get 'users/sign_in', to: 'users/sessions#new'
-    
+
     devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations',passwords: 'users/passwords' }
     root 'users/sessions#new'
 

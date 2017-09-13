@@ -73,10 +73,10 @@
 			
 			<div class='col-md-12'> 
 				<%= link_to album_comments_path(album.id) do %>
-					<% if album.album_images.first.image_name.present? %>
+					<% if album.album_images.first.present? %>
 						<%= image_tag album.album_images.first.image_name_url(:size_135_180) , class: 'img-thumbnail'	%>
 					<% else %>
-						<%= image_tag "/uploads/", class: 'img-thumbnail' %>
+						<%= image_tag "images.png", class: 'img-thumbnail' %>
 					<% end %>
 				<% end %>
 			</div>

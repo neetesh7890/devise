@@ -84,7 +84,7 @@ class AlbumsController < ApplicationController
 	def destroy
 		@album = current_user.albums.find_by(id: params[:id])
 		flash[:notice] = @album.destroy ? "Album deleted" : "Album could not deleted"
-		redirect_to albums_path(current_user.id)
+		redirect_to albums_path
 	end
 
 	def get_friend_albums
