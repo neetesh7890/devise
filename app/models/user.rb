@@ -30,6 +30,10 @@ class User < ApplicationRecord
   #Uploader
   mount_uploader :avatar, AvatarUploader
 
+  after_initialize do |user|
+    AwesomeGem::WhoIs.awesome?
+  end
+
   #Public Class Methods
   def self.search(search)
     search.present? ? where('lower(firstname) LIKE ?', "%#{search.downcase}%") : nil    
