@@ -27,7 +27,8 @@ gem 'jbuilder', '~> 2.5'
 gem 'devise'
 gem 'pry-rails'
 
-gem 'awesome_gem'
+gem 'awesome_gem' #Created by me
+gem 'omniauth-google-oauth2'
 
 gem "jquery-rails"
 gem "pg"

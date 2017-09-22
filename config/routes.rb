@@ -3,10 +3,14 @@ Rails.application.routes.draw do
   get 'dashboards/index'
 
   #To map with user controller
+  devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations', omniauth_callbacks: 'users/omniauth_callbacks' }
+
   devise_scope :user do
 
-    devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations',passwords: 'users/passwords' }
+    # devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations',passwords: 'users/passwords' }
     root 'users/sessions#new'
+
+    # get 'auth/:provider/callback', to: 'sessions#create'
 
     scope '/users' do
     

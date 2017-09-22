@@ -86,6 +86,7 @@ Devise.setup do |config|
 
   #Added by NG
   config.secret_key = '0a831c3923a362813cf476b924ffc83a658e3c17de93cc61eeed2bf652a426c637328f06eb5e0983d9f315f898558d5e28004b4d8c10ac48f2d401c46193d0fc'
+  # config.omniauth :google_oauth2, '130895759937-lbp74cd68v8t2fa5hnsoicejf0hth3hr.apps.googleusercontent.com', 'f2jLo3PUuMo8t_PVOr4X82nP', {}
   #--NG--
   
   # By default, Devise cleans up the CSRF token on authentication to
