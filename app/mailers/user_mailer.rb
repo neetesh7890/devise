@@ -3,13 +3,13 @@ class UserMailer < ApplicationMailer
  
   def forgot_email(user)
     @user = user
-    email_with_name = %("#{@user.firstname}" <#{@user.email}>)
+    email_with_name = %("#{@user.name}" <#{@user.email}>)
     mail(to: email_with_name, subject: 'Reset Password')
   end
 
   def welcome_email(user)
     @user = user
-    email_with_name = %("#{@user.firstname}" <#{@user.email}>)
+    email_with_name = %("#{@user.name}" <#{@user.email}>)
     mail(to: email_with_name, subject: 'Welcome User')
   end
 
@@ -17,7 +17,7 @@ class UserMailer < ApplicationMailer
     @user = user
     @friend = friend
     @token = token
-    email_with_name = %("#{@friend.firstname}" <#{@friend.email}>)
+    email_with_name = %("#{@friend.name}" <#{@friend.email}>)
     mail(to: email_with_name, subject: 'New Request')
   end
 end

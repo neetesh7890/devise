@@ -8,7 +8,7 @@ class User < ApplicationRecord
 
   #Validations
   # validates :email, uniqueness: true, presence: true,format: { with: /\A[^@\s]+@([^@.\s]+\.)+[^@.\s]+\z/ }
-  validates_presence_of :firstname, :lastname  #,:gender,:dob
+  validates_presence_of :name, :lastname  #,:gender,:dob
   validate :avatar_size , if: :avatar?
 
   #Attributes
@@ -38,7 +38,7 @@ class User < ApplicationRecord
     data = access_token.info
     user = User.where(email: data['email']).first
     unless user
-      user = User.create(firstname: data['name'],lastname: data['last_name'],email: data['email'],password: Devise.friendly_token[0,20])
+      user = User.create(name: data['name'],lastname: data['last_name'],email: data['email'],password: Devise.friendly_token[0,20])
     end
     user
   end
@@ -57,6 +57,6 @@ class User < ApplicationRecord
 
   #Public Class Methods
   def self.search(search)
-    search.present? ? where('lower(firstname) LIKE ?', "%#{search.downcase}%") : nil    
+    search.present? ? where('lower(name) LIKE ?', "%#{search.downcase}%") : nil    
   end
 end

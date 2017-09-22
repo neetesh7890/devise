@@ -4,7 +4,7 @@
 </div>
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= devise_error_messages! %>
-
+  
   <!-- Added by NG -->
     <%= f.fields_for :user_detail do |ud| %>
       <div class="col-md-1 col-md-offset-4 center">
@@ -60,8 +60,7 @@
 
     <% end %>
   <!-- end -->
-
-
+  
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>

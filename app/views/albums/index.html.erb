@@ -68,7 +68,7 @@
 	<% @friends_albums.each do |album| %>
 		<div class='col-md-2'>
 			<div class="col-md-4">
-				<h4><%= current_user.friends.confirm_friend.find_by(id: album.user_id).firstname %></h4>
+				<h4><%= current_user.friends.confirm_friend.find_by(id: album.user_id).name %></h4>
 			</div>
 			
 			<div class='col-md-12'> 

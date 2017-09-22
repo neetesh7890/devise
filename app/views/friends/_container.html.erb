@@ -7,7 +7,7 @@
 		    		<%= image_tag "/uploads/#{result.avater}", height: '55', width: '70'	%>
 		    	<%	end %>			
 		    </td>
-				<td><%= result.firstname %></td>
+				<td><%= result.name %></td>
 				<td >	
 					<%= link_to  friend_notification_path(result.id), class: 'request-sent', remote: true do%>
 	  			<i class="fa fa-user-plus " aria-hidden="true"></i>
