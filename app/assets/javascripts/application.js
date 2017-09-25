@@ -13,9 +13,9 @@
 //= require rails-ujs
 //= require turbolinks
 //= require jquery
-// @import "font-awesome-sprockets";
-// @import "font-awesome";
 //= require bootstrap-sprockets
+//= require underscore
+//= require gmaps/google
 //= require_tree .
 
 function submit_btn() {
@@ -26,5 +26,25 @@ function submit_btn() {
     type: 'POST',
     dataType: 'script',
     data: { new_comment: $("#comment_comment_name").val() }
+  });
+}
+
+function cmpLocation(){
+  handler = Gmaps.build('Google');
+  handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+    markers = handler.addMarkers([
+      {
+        "lat": 22.719639,
+        "lng": 75.884250,
+        "picture": {
+          "url": "http://bounceworld.co.za/bounceworld/wp-content/uploads/2015/10/map_marker.png",
+          "width":  32,
+          "height": 32
+        },
+        "infowindow": "hello!"
+      }
+    ]);
+    handler.bounds.extendWith(markers);
+    handler.fitMapToBounds();
   });
 }

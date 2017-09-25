@@ -29,6 +29,7 @@ gem 'pry-rails'
 
 gem 'awesome_gem' #Created by me
 gem 'omniauth-google-oauth2'
+gem 'gmaps4rails'
 
 gem "jquery-rails"
 gem "pg"
