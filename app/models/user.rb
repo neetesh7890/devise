@@ -2,13 +2,13 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :omniauthable, omniauth_providers: [:google_oauth2]
+         :recoverable, :rememberable, :trackable, :validatable, :omniauthable, omniauth_providers: [:google_oauth2, :facebook, :twitter]
 
   include ImageSize
 
   #Validations
   # validates :email, uniqueness: true, presence: true,format: { with: /\A[^@\s]+@([^@.\s]+\.)+[^@.\s]+\z/ }
-  validates_presence_of :name, :lastname  #,:gender,:dob
+  # validates_presence_of :name, :lastname  #,:gender,:dob
   validate :avatar_size , if: :avatar?
 
   #Attributes
@@ -43,6 +43,22 @@ class User < ApplicationRecord
     user
   end
 
+  def self.find_or_create_from_auth_hash(autohash) #Twitter
+    user = User.where(username: autohash[:info][:nickname]).first
+    unless user
+      user = User.create(name: autohash[:info][:name], username: autohash[:info][:nickname], password: Devise.friendly_token[0,20], email: autohash[:credentials][:token]+"@"+autohash[:provider]+".com")
+    end
+    user
+  end
+
+  def self.find_for_facebook_oauth(auth)
+    debugger
+    user = User.where(email: auth[:info][:email]).first
+    unless user
+      user = User.create(name: auth[:info][:name], email: auth[:info][:email], password: Devise.friendly_token[0,20], provider: auth[:provider])
+    end
+    user
+  end
   
 
   # def self.from_omniauth(auth)

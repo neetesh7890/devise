@@ -1,21 +1,30 @@
-<div class="">
+<div class="col-md-4">
   <h1> Welcome <%= current_user.name %></h1>
   <%= image_tag current_user_avatar %>
 </div>
+<div class="col-md-8">
+  <button type="button" onclick="cmpLocation()">TOUT</button>
+  <div id="map" style="width: auto; height: 400px;background-color: powderblue;">
 
-<%= link_to "Gmail contacts", "/dashboards/gmail" %>
+  </div>
+</div>
+
+
+<h1><%= link_to "Gmail contacts", "/contacts/gmail" %></h1>
 
 <div>
-  <% @contacts.each do |item| %>
-    <div class="col-md-6">
-      <h3> Name: </h3> <%= item[:first_name] %>
-    </div>
+  <% if @contacts.present? %>
+    <% @contacts.each do |item| %>
+      <div class="col-md-6">
+        <h3> Name: </h3> <%= item[:first_name] %>
+      </div>
 
-    <div class="col-md-6">
-      <% item[:emails].each do |all_email| %>
-        <h3> Email: </h3> <%= all_email[:email] %>
-      <% end %>
-    </div>
+      <div class="col-md-6">
+        <% item[:emails].each do |all_email| %>
+          <h3> Email: </h3> <%= all_email[:email] %>
+        <% end %>
+      </div>
+    <% end %>
   <% end %>
 </div>
 

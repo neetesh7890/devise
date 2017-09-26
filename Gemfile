@@ -31,7 +31,8 @@ gem 'awesome_gem' #Created by me
 gem 'omniauth-google-oauth2'
 gem 'gmaps4rails'
 gem 'omnicontacts' 
-
+gem 'omniauth-facebook'
+gem 'omniauth-twitter'
 
 gem "jquery-rails"
 gem "pg"
