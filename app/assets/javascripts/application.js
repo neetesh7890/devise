@@ -37,9 +37,9 @@ function cmpLocation(){
         "lat": 22.719639,
         "lng": 75.884250,
         "picture": {
-          "url": "http://bounceworld.co.za/bounceworld/wp-content/uploads/2015/10/map_marker.png",
-          "width":  32,
-          "height": 32
+          "url": "https://addons.cdn.mozilla.net/user-media/addon_icons/13/13028-64.png",
+          "width":  36,
+          "height": 36
         },
         "infowindow": "hello!"
       }

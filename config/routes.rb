@@ -5,6 +5,10 @@ Rails.application.routes.draw do
   #To map with user controller
   devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations', omniauth_callbacks: 'users/omniauth_callbacks' }
 
+  get "/contacts/:provider/contact_callback", to:"dashboards#index"
+  get "/contacts/failure", to:"dashboards#failure"
+
+
   devise_scope :user do
 
     # devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations',passwords: 'users/passwords' }

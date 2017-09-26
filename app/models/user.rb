@@ -43,6 +43,8 @@ class User < ApplicationRecord
     user
   end
 
+  
+
   # def self.from_omniauth(auth)
   #   debugger
   #   where(provider: auth.provider, uid: auth.uid).first_or_initialize.tap do |user|
