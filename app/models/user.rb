@@ -52,7 +52,6 @@ class User < ApplicationRecord
   end
 
   def self.find_for_facebook_oauth(auth)
-    debugger
     user = User.where(email: auth[:info][:email]).first
     unless user
       user = User.create(name: auth[:info][:name], email: auth[:info][:email], password: Devise.friendly_token[0,20], provider: auth[:provider])
@@ -62,7 +61,6 @@ class User < ApplicationRecord
   
 
   # def self.from_omniauth(auth)
-  #   debugger
   #   where(provider: auth.provider, uid: auth.uid).first_or_initialize.tap do |user|
   #     user.provider = auth.provider
   #     user.uid = auth.uid
