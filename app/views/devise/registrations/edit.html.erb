@@ -1,0 +1,70 @@
+<center><h2>Edit <%= resource_name.to_s.humanize %></h2></center>
+<div class="col-md-12">
+  <br>
+</div>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+  <%= devise_error_messages! %>
+  
+  <!-- Added by NG -->
+    <%= f.fields_for :user_detail do |ud| %>
+      <div class="col-md-1 col-md-offset-4 center">
+        <%= ud.label :address %>
+      </div>
+
+      <div class="col-md-7">
+        <%= ud.text_field :address %>
+      </div>
+
+      <div class="col-md-1 col-md-offset-4 center">
+        <%= ud.label :city %>
+      </div>
+      <div class="col-md-7">
+        <%= ud.text_field :city %>
+      </div>
+
+      <div class="col-md-1 col-md-offset-4 center">
+        <%= ud.label :pincode %>
+        
+      </div>
+      <div class="col-md-7">
+        <%= ud.text_field :pincode %>
+      </div>
+
+      <div class="col-md-1 col-md-offset-4 center">
+        <%= ud.label :phone %>
+        
+      </div>
+      <div class="col-md-7">
+        <%= ud.text_field :phone %>
+      </div>
+
+      <div class="col-md-1 col-md-offset-4 center">
+        <%= f.label :email %><br />
+      </div>
+
+      <div class="col-md-7">
+        <%= f.email_field :email, autofocus: true %>
+      </div>
+
+      <div class="col-md-1 col-md-offset-4 center">
+        <%= f.label :avatar %>
+      </div>
+
+      <div class="col-md-7">
+        <%= f.file_field :avatar %>
+      </div>
+        
+      </div>
+
+      <div class="col-md-7 col-md-offset-5">
+        <%= ud.submit "Update", class: 'btn btn-default', :onclick => "gmap_show(#{current_user.to_json});" %>
+      </div>
+
+    <% end %>
+  <!-- end -->
+  
+  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+  <% end %>
+
+<% end %>

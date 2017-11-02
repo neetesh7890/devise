@@ -12,6 +12,22 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
+  def edit
+    @detail = current_user.user_detail.present? ? current_user.user_detail : current_user.build_user_detail
+  end
+
+  def update
+    @detail = current_user.user_detail.present? ? current_user.user_detail : current_user.build_user_detail
+    current_user.size = params[:user][:avatar].present? ? params[:user][:avatar].size : 0
+    current_user.avatar = params[:user][:avatar]
+    if current_user.update(user_params)
+      flash[:notice] = "#{current_user.name} Your Profile successfully updated"
+      redirect_to dashboards_path
+    else
+      render 'edit'
+    end
+  end
+
   # GET /resource/edit
   # def edit
   #   super
@@ -19,7 +35,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # PUT /resource
   # def update
-  #   super
+  #   current_user.avatar = params[:user][:avatar]
+  #   if current_user.update(user_params)
+  #     redirect_to dashboards_path
+  #   else
+  #     render 'edit'
+  #   end
+  #   # after_update_path_for(resource)
   # end
 
   # DELETE /resource
@@ -36,11 +58,24 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # protected
+  protected
+
+  def user_params
+    params.require(:user).permit(:name, :lastname, :email, :password, :gender, :dob, :cmp_name, :lat, :lng, user_detail_attributes: [:address, :city, :pincode, :phone] )
+  end
+
+  # def after_update_path_for(resource)
+  #   case resource
+  #   when :user, User
+  #     resource.avatar? ? redirect_to dashboards_path : redirect_to root_path
+  #   else
+  #     super
+  #   end
+  # end
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_up_params
-  #   devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute])
+  #   devise_parameter_sanitizer.permit(:sign_up, keys: [:])
   # end
 
   # If you have extra params to permit, append them to the sanitizer.
@@ -49,9 +84,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # The path used after sign up.
-  # def after_sign_up_path_for(resource)
-  #   super(resource)
-  # end
+  def after_sign_up_path_for(resource)
+    super(resource)
+  end
 
   # The path used after sign up for inactive accounts.
   # def after_inactive_sign_up_path_for(resource)

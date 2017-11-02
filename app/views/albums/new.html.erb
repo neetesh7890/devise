@@ -1,0 +1,24 @@
+<%= form_for @album, url: albums_path, method: :post do |f| %>
+
+  <div class="col-md-12 center">
+    <h3>Upload album<h3>
+  </div>
+  
+  <div class="col-md-12 center">
+    <%= f.label :Album_name %>
+    <%= f.text_field :album_name, :required => true %>  
+  </div>
+  
+  <div class="col-md-2 col-sm-offset-4">
+    <%= f.label :pictures, :required => true %>
+    
+  </div>
+  <div class="col-md-6 ">
+    <%= f.file_field :image_name, multiple: true %>
+  </div>
+  
+  <div class="col-md-12 center">
+    <%= f.submit "Save changes" %>
+  </div>
+  
+<% end %>

@@ -10,9 +10,41 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
 //= require rails-ujs
 //= require turbolinks
+//= require jquery
 //= require bootstrap-sprockets
-
+//= require underscore
+//= require gmaps/google
 //= require_tree .
+
+function submit_btn() {
+  $(this).value = "";
+  album = $("#album_id").val()
+  $.ajax({
+    url: "/users" + "/albums/" + album + "/comments/remark",
+    type: 'POST',
+    dataType: 'script',
+    data: { new_comment: $("#comment_comment_name").val() }
+  });
+}
+
+function cmpLocation(){
+  handler = Gmaps.build('Google');
+  handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+    markers = handler.addMarkers([
+      {
+        "lat": 22.719639,
+        "lng": 75.884250,
+        "picture": {
+          "url": "https://addons.cdn.mozilla.net/user-media/addon_icons/13/13028-64.png",
+          "width":  36,
+          "height": 36
+        },
+        "infowindow": "hello!"
+      }
+    ]);
+    handler.bounds.extendWith(markers);
+    handler.fitMapToBounds();
+  });
+}

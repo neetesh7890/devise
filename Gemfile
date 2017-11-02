@@ -5,11 +5,10 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.3'
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 # Use SCSS for stylesheets
@@ -28,9 +27,21 @@ gem 'jbuilder', '~> 2.5'
 gem 'devise'
 gem 'pry-rails'
 
-gem "jquery-rails"
+gem 'awesome_gem' #Created by me
+gem 'omniauth-google-oauth2'
+gem 'gmaps4rails'
+gem 'omnicontacts' 
+gem 'omniauth-facebook'
+gem 'omniauth-twitter'
 
+gem "jquery-rails"
+gem "pg"
 gem 'bootstrap-sass'
+gem 'will_paginate'
+gem 'font-awesome-sass'
+gem "rmagick"
+gem 'mini_magick'
+gem 'carrierwave'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
@@ -46,7 +57,18 @@ group :development, :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
+
+  #NG
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
 end
+
+
+# Added by NG
+group :test do
+  gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
+end
+# -- NG--
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
