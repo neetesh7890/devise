@@ -2,6 +2,7 @@ class Album < ApplicationRecord
   #Associations
   belongs_to :user
   has_many :comments, as: :commentable, dependent: :destroy, autosave: true
+ 
   has_many :album_images, dependent: :destroy, autosave: true
 
   #Scopes
