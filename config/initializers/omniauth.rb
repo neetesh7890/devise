@@ -1,5 +1,5 @@
 OmniAuth.config.logger = Rails.logger
-OmniAuth.config.full_host = 'http://localhost:3000'
+OmniAuth.config.full_host = 'https://guarded-bastion-43444.herokuapp.com'
 
 Rails.application.config.middleware.use OmniAuth::Builder do
   provider :google_oauth2, '130895759937-lbp74cd68v8t2fa5hnsoicejf0hth3hr.apps.googleusercontent.com','f2jLo3PUuMo8t_PVOr4X82nP',{}
